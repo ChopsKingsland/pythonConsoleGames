@@ -30,28 +30,7 @@ def clear():
     else: 
         _ = system('clear') 
 
-
-while gameEnd == False:
-    clear()
-    printBoard()
-    inputMove = input('Where would you like to play your turn? ')
-
-
-
-
-    if inputMove[0].upper() == 'A' or inputMove[0].upper() == 'B' or inputMove[0].upper() == 'C':
-        if inputMove[1] == '1' or inputMove[1] == '2' or inputMove[1] == '3':
-            letter = inputMove[0].upper()
-            number = int(inputMove[1]) - 1
-            if tttArray[abc[letter]][number] == '-':
-                if player == 1:
-                    tttArray[abc[letter]][number] = fg.yellow + 'X' + fg.rs
-                    player = 2
-                elif player == 2:
-                    tttArray[abc[letter]][number] = fg.green + 'O' + fg.rs
-                    player = 1
-            
-    
+def checkForWin():
     if tttArray[0][0] == 'X' and tttArray[1][0] == 'X' and tttArray[2][0] == 'X':
         winner = "X"
         gameEnd = True
@@ -77,7 +56,7 @@ while gameEnd == False:
         winner = "X"
         gameEnd = True
 
-    if tttArray[0][0] == 'O' and tttArray[1][0] == 'O' and tttArray[2][0] == 'O':
+    elif tttArray[0][0] == 'O' and tttArray[1][0] == 'O' and tttArray[2][0] == 'O':
         winner = "O"
         gameEnd = True
     elif tttArray[0][1] == 'O' and tttArray[1][1] == 'O' and tttArray[2][1] == 'O':
@@ -102,14 +81,32 @@ while gameEnd == False:
         winner = "O"
         gameEnd = True
     
-    if "-" not in tttArray[0] and "-" not in tttArray[1] and "-" not in tttArray[2]:
+    elif "-" not in tttArray[0] and "-" not in tttArray[1] and "-" not in tttArray[2]:
         winner = "-"
         gameEnd = True
 
+while gameEnd == False:
+    clear()
+    printBoard()
+    inputMove = input('Where would you like to play your turn? ')
+
+    if inputMove[0].upper() == 'A' or inputMove[0].upper() == 'B' or inputMove[0].upper() == 'C':
+        if inputMove[1] == '1' or inputMove[1] == '2' or inputMove[1] == '3':
+            letter = inputMove[0].upper()
+            number = int(inputMove[1]) - 1
+            if tttArray[abc[letter]][number] == '-':
+                if player == 1:
+                    tttArray[abc[letter]][number] = fg.yellow + 'X' + fg.rs
+                    checkForWin()
+                    player = 2
+                elif player == 2:
+                    tttArray[abc[letter]][number] = fg.green + 'O' + fg.rs
+                    checkForWin()
+                    player = 1
 clear()       
 printBoard()                
 # print('end')
-if winner == 'X':
+if winner == "X":
     # print("Player X won")
     print("""
  _______   __                                                  __                        __                     
@@ -125,7 +122,7 @@ if winner == 'X':
                          \\$$    $$                                                                              
                           \\$$$$$$                                                                               
     """)
-elif winner == 'O':
+elif winner == "O":
     # print('Player O won')
     print("""
  _______   __                                                 ______                       __                     
@@ -141,7 +138,7 @@ elif winner == 'O':
                          \\$$    $$                                                                                
                           \\$$$$$$                                                                                 
     """)
-else:
+elif winner == "-":
     # print('Draw')
     print("""
  _______                                   
